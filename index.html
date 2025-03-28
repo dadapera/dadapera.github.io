@@ -24,20 +24,79 @@
         .demo-container {
             margin-top: 30px;
         }
+
+        .language-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .language-btn:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 
 <body>
+    <button id="languageToggle" class="language-btn" onclick="toggleLanguage()">English</button>
+    
     <div class="container">
-        <h1>Benvenuto nel Mio Portfolio</h1>
-        <p>Ciao! Sono [Il Tuo Nome], un esperto in AI e sviluppo di chatbot. Scopri i miei progetti qui sotto.</p>
+        <h1 id="welcome">Benvenuto nel Mio Portfolio</h1>
+        <p id="intro">Ciao! Sono Davide Perozzi, un esperto in AI e sviluppo di chatbot. Scopri i miei progetti qui sotto.</p>
 
         <div class="demo-container">
-            <h2>Demo Interattive</h2>
-            <p>Prova le mie demo basate su LLM e RAG:</p>
-            <iframe src="https://huggingface.co/spaces/tuo-spazio" width="100%" height="600px"></iframe>
+            <h2 id="demo-title">Demo Interattive</h2>
+            <p id="demo-desc">Prova le mie demo basate su LLM e RAG:</p>
+            <p id="coming-soon">Coming soon!</p>
+            <!-- <iframe src="https://huggingface.co/spaces/tuo-spazio" width="100%" height="600px"></iframe> -->
         </div>
     </div>
+
+    <script>
+        // Define translations
+        const translations = {
+            it: {
+                welcome: "Benvenuto nel Mio Portfolio",
+                intro: "Ciao! Sono Davide Perozzi, un esperto in AI e sviluppo di chatbot. Scopri i miei progetti qui sotto.",
+                demoTitle: "Demo Interattive",
+                demoDesc: "Prova le mie demo basate su LLM e RAG:",
+                comingSoon: "Coming soon!",
+                buttonText: "English"
+            },
+            en: {
+                welcome: "Welcome to My Portfolio",
+                intro: "Hi! I'm Davide Perozzi, an expert in AI and chatbot development. Discover my projects below.",
+                demoTitle: "Interactive Demos",
+                demoDesc: "Try my demos based on LLM and RAG:",
+                comingSoon: "Coming soon!",
+                buttonText: "Italiano"
+            }
+        };
+
+        let currentLang = 'it';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'it' ? 'en' : 'it';
+            updateContent();
+            document.documentElement.lang = currentLang;
+        }
+
+        function updateContent() {
+            const lang = translations[currentLang];
+            document.getElementById('welcome').textContent = lang.welcome;
+            document.getElementById('intro').textContent = lang.intro;
+            document.getElementById('demo-title').textContent = lang.demoTitle;
+            document.getElementById('demo-desc').textContent = lang.demoDesc;
+            document.getElementById('coming-soon').textContent = lang.comingSoon;
+            document.getElementById('languageToggle').textContent = lang.buttonText;
+        }
+    </script>
 </body>
 
 </html>
