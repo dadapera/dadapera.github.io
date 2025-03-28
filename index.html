@@ -5,56 +5,596 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Mio Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --highlight-color: #e74c3c;
+            --text-color: #2c3e50;
+            --light-text: #ffffff;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --gradient: linear-gradient(135deg, #2c3e50, #34495e);
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --border-radius: 12px;
         }
 
-        h1 {
-            color: #333;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--text-color);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
         .container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            transform: translateY(0);
+            transition: var(--transition);
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .profile-section {
+            flex-shrink: 0;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: -10px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-text);
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: var(--accent-color);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .social-link i {
+            font-size: 1.2em;
+        }
+
+        .profile-container {
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .profile-container:hover {
+            transform: rotateY(180deg);
+        }
+
+        .studies-section, .skills-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .studies-title, .skills-title {
+            color: var(--secondary-color);
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .studies-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .study-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+        }
+
+        .study-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .study-degree {
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .study-field {
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+
+        .profile-front,
+        .profile-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: var(--gradient);
+        }
+
+        .profile-front {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-back {
+            transform: rotateY(180deg);
+            background: var(--accent-color);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .content-section {
+            flex: 1;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 3em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 2em;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin: 20px 0;
+            color: var(--text-color);
             max-width: 800px;
-            margin: auto;
+            font-weight: 400;
         }
 
         .demo-container {
+            margin-top: 60px;
+            padding: 40px;
+            background: var(--secondary-color);
+            border-radius: var(--border-radius);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-container h2 {
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .demo-container > p {
+            color: var(--light-text);
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .demo-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
             margin-top: 30px;
         }
 
-        .language-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
+        .demo-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-content {
+            margin-bottom: 20px;
+        }
+
+        .demo-iframe-container {
+            width: 100%;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-iframe {
+            width: 100%;
+            height: 100%;
             border: none;
-            border-radius: 4px;
+        }
+
+        .demo-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--light-text);
+            opacity: 0.7;
+        }
+
+        .demo-placeholder i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .demo-title {
+            color: var(--light-text);
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .demo-desc {
+            color: var(--light-text);
+            opacity: 0.9;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .demo-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .demo-tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+
+        .language-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 10px 20px;
+            background: var(--gradient);
+            color: var(--light-text);
+            border: none;
+            border-radius: 20px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1em;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            letter-spacing: 0.02em;
+            z-index: 1000;
         }
 
         .language-btn:hover {
-            background-color: #45a049;
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(52, 152, 219, 0.2);
+        }
+
+        .flag-icon {
+            width: 20px;
+            height: 15px;
+            vertical-align: middle;
+            border-radius: 2px;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+        }
+
+        #coming-soon {
+            color: var(--highlight-color);
+            font-weight: 500;
+            font-size: 1.2em;
+            margin-top: 30px;
+            padding: 15px 25px;
+            background: rgba(233, 69, 96, 0.08);
+            border-radius: 8px;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #coming-soon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-item {
+            background: var(--gradient);
+            color: var(--light-text);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+
+            .profile-section {
+                width: 100%;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .profile-container {
+                width: 150px;
+                height: 150px;
+            }
+
+            .studies-section, .skills-section {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .container {
+                margin: 20px;
+                padding: 30px 20px;
+                border-radius: 8px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .language-btn {
+                top: 20px;
+                right: 20px;
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
-    <button id="languageToggle" class="language-btn" onclick="toggleLanguage()">English 🇬🇧</button>
+    <button id="languageToggle" class="language-btn" onclick="toggleLanguage()">
+        English <img src="https://flagcdn.com/24x18/gb.png" class="flag-icon" alt="English">
+    </button>
     
     <div class="container">
-        <h1 id="welcome">Benvenuto nel Mio Portfolio</h1>
-        <p id="intro">Ciao! Sono Davide Perozzi, un esperto in AI e sviluppo di chatbot. Scopri i miei progetti qui sotto.</p>
+        <div class="profile-section">
+            <div class="profile-container">
+                <div class="profile-front">
+                    <img src="assets/profile-img.png" alt="Davide Perozzi" class="profile-image">
+                </div>
+                <div class="profile-back">
+                    <img src="your-ai-photo.jpg" alt="AI Davide Perozzi" class="profile-image">
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/davide-perozzi-7006141b2" class="social-link" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/dadapera" class="social-link" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://wa.me/+393451436635" class="social-link" target="_blank" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="studies-section">
+                <h3 class="studies-title">Formazione</h3>
+                <ul class="studies-list">
+                    <li class="study-item">
+                        <div class="study-degree">MSc in Artificial Intelligence</div>
+                        <div class="study-field">Università di Bologna</div>
+                    </li>
+                    <li class="study-item">
+                        <div class="study-degree">BSc in Computer Science</div>
+                        <div class="study-field">Università di Camerino</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="skills-section">
+                <h3 class="skills-title">Competenze</h3>
+                <ul class="skills-list">
+                    <li class="skill-item">Python</li>
+                    <li class="skill-item">Machine Learning</li>
+                    <li class="skill-item">Deep Learning</li>
+                    <li class="skill-item">NLP</li>
+                    <li class="skill-item">LLMs</li>
+                    <li class="skill-item">RAG</li>
+                    <li class="skill-item">JavaScript</li>
+                    <li class="skill-item">React</li>
+                    <li class="skill-item">Node.js</li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-section">
+            <h1 id="welcome">Benvenuto nel Mio Portfolio</h1>
+            <p id="intro">Ciao! Sono Davide Perozzi, un esperto in AI e sviluppo di chatbot. Scopri i miei progetti qui sotto.</p>
 
-        <div class="demo-container">
-            <h2 id="demo-title">Demo Interattive</h2>
-            <p id="demo-desc">Prova le mie demo basate su LLM e RAG:</p>
-            <p id="coming-soon">Coming soon!</p>
-            <!-- <iframe src="https://huggingface.co/spaces/tuo-spazio" width="100%" height="600px"></iframe> -->
+            <div class="demo-container">
+                <h2 id="demo-title">Le mie Esperienze</h2>
+                <p id="demo-desc">Prova le mie demo basate su LLM e RAG:</p>
+                <div class="demo-grid">
+                    <div class="demo-item">
+                        <div class="demo-content">
+                            <div class="demo-title">AI Chat Assistant</div>
+                            <div class="demo-desc">Un chatbot intelligente basato su LLM con capacità di RAG per risposte accurate e contestuali.</div>
+                            <div class="demo-tags">
+                                <span class="demo-tag">LLMs</span>
+                                <span class="demo-tag">RAG</span>
+                                <span class="demo-tag">Python</span>
+                            </div>
+                        </div>
+                        <div class="demo-iframe-container">
+                            <div class="demo-placeholder">
+                                <p>🤖</p>
+                                <p>Hugging Face Space: AI Chat Assistant</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-item">
+                        <div class="demo-content">
+                            <div class="demo-title">NLP Text Analyzer</div>
+                            <div class="demo-desc">Analisi del sentiment e classificazione del testo utilizzando tecniche avanzate di NLP.</div>
+                            <div class="demo-tags">
+                                <span class="demo-tag">NLP</span>
+                                <span class="demo-tag">Machine Learning</span>
+                                <span class="demo-tag">Python</span>
+                            </div>
+                        </div>
+                        <div class="demo-iframe-container">
+                            <div class="demo-placeholder">
+                                <p>📊</p>
+                                <p>Hugging Face Space: NLP Analyzer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-item">
+                        <div class="demo-content">
+                            <div class="demo-title">Deep Learning Vision</div>
+                            <div class="demo-desc">Riconoscimento di oggetti e analisi delle immagini con reti neurali profonde.</div>
+                            <div class="demo-tags">
+                                <span class="demo-tag">Deep Learning</span>
+                                <span class="demo-tag">Python</span>
+                                <span class="demo-tag">Machine Learning</span>
+                            </div>
+                        </div>
+                        <div class="demo-iframe-container">
+                            <div class="demo-placeholder">
+                                <p>👁️</p>
+                                <p>Hugging Face Space: Vision AI</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-item">
+                        <div class="demo-content">
+                            <div class="demo-title">React AI Dashboard</div>
+                            <div class="demo-desc">Dashboard interattiva per la visualizzazione e il monitoraggio di modelli AI.</div>
+                            <div class="demo-tags">
+                                <span class="demo-tag">React</span>
+                                <span class="demo-tag">JavaScript</span>
+                                <span class="demo-tag">Node.js</span>
+                            </div>
+                        </div>
+                        <div class="demo-iframe-container">
+                            <div class="demo-placeholder">
+                                <p>📈</p>
+                                <p>Hugging Face Space: AI Dashboard</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -64,19 +604,83 @@
             it: {
                 welcome: "Benvenuto nel Mio Portfolio",
                 intro: "Ciao! Sono Davide Perozzi, un esperto in AI e sviluppo di chatbot. Scopri i miei progetti qui sotto.",
-                demoTitle: "Demo Interattive",
+                demoTitle: "Le mie Esperienze",
                 demoDesc: "Prova le mie demo basate su LLM e RAG:",
                 comingSoon: "Coming soon!",
-                buttonText: "English 🇬🇧"
+                buttonText: "English",
+                flagUrl: "https://flagcdn.com/24x18/gb.png",
+                educationTitle: "Formazione",
+                universityOf: "Università di",
+                skillsTitle: "Competenze",
+                demos: {
+                    aiChat: {
+                        title: "AI Chat Assistant",
+                        desc: "Un chatbot intelligente basato su LLM con capacità di RAG per risposte accurate e contestuali."
+                    },
+                    nlp: {
+                        title: "NLP Text Analyzer",
+                        desc: "Analisi del sentiment e classificazione del testo utilizzando tecniche avanzate di NLP."
+                    },
+                    vision: {
+                        title: "Deep Learning Vision",
+                        desc: "Riconoscimento di oggetti e analisi delle immagini con reti neurali profonde."
+                    },
+                    dashboard: {
+                        title: "React AI Dashboard",
+                        desc: "Dashboard interattiva per la visualizzazione e il monitoraggio di modelli AI."
+                    }
+                }
             },
             en: {
                 welcome: "Welcome to My Portfolio",
                 intro: "Hi! I'm Davide Perozzi, an expert in AI and chatbot development. Discover my projects below.",
-                demoTitle: "Interactive Demos",
+                demoTitle: "My Experiences",
                 demoDesc: "Try my demos based on LLM and RAG:",
                 comingSoon: "Coming soon!",
-                buttonText: "Italiano 🇮🇹"
+                buttonText: "Italiano",
+                flagUrl: "https://flagcdn.com/24x18/it.png",
+                educationTitle: "Education",
+                universityOf: "University of",
+                skillsTitle: "Skills",
+                demos: {
+                    aiChat: {
+                        title: "AI Chat Assistant",
+                        desc: "An intelligent chatbot based on LLM with RAG capabilities for accurate and contextual responses."
+                    },
+                    nlp: {
+                        title: "NLP Text Analyzer",
+                        desc: "Sentiment analysis and text classification using advanced NLP techniques."
+                    },
+                    vision: {
+                        title: "Deep Learning Vision",
+                        desc: "Object recognition and image analysis using deep neural networks."
+                    },
+                    dashboard: {
+                        title: "React AI Dashboard",
+                        desc: "Interactive dashboard for AI model visualization and monitoring."
+                    }
+                }
             }
+        };
+
+        // Initialize content with Italian translations
+        window.onload = function() {
+            const initialLang = translations.it;
+            document.getElementById('welcome').textContent = initialLang.welcome;
+            document.getElementById('intro').textContent = initialLang.intro;
+            document.getElementById('demo-title').textContent = initialLang.demoTitle;
+            document.getElementById('demo-desc').textContent = initialLang.demoDesc;
+            document.querySelector('.studies-title').textContent = initialLang.educationTitle;
+            document.querySelector('.skills-title').textContent = initialLang.skillsTitle;
+            
+            // Initialize demo content
+            const demoItems = document.querySelectorAll('.demo-item');
+            const demoKeys = ['aiChat', 'nlp', 'vision', 'dashboard'];
+            demoItems.forEach((item, index) => {
+                const demo = initialLang.demos[demoKeys[index]];
+                item.querySelector('.demo-title').textContent = demo.title;
+                item.querySelector('.demo-desc').textContent = demo.desc;
+            });
         };
 
         let currentLang = 'it';
@@ -93,8 +697,27 @@
             document.getElementById('intro').textContent = lang.intro;
             document.getElementById('demo-title').textContent = lang.demoTitle;
             document.getElementById('demo-desc').textContent = lang.demoDesc;
-            document.getElementById('coming-soon').textContent = lang.comingSoon;
-            document.getElementById('languageToggle').textContent = lang.buttonText;
+            document.querySelector('.studies-title').textContent = lang.educationTitle;
+            document.querySelector('.skills-title').textContent = lang.skillsTitle;
+            
+            // Update university names with translation
+            const universityElements = document.querySelectorAll('.study-field');
+            universityElements.forEach(element => {
+                const university = element.textContent.split(' ').pop();
+                element.textContent = `${lang.universityOf} ${university}`;
+            });
+            
+            // Update demo titles and descriptions
+            const demoItems = document.querySelectorAll('.demo-item');
+            const demoKeys = ['aiChat', 'nlp', 'vision', 'dashboard'];
+            demoItems.forEach((item, index) => {
+                const demo = lang.demos[demoKeys[index]];
+                item.querySelector('.demo-title').textContent = demo.title;
+                item.querySelector('.demo-desc').textContent = demo.desc;
+            });
+            
+            const button = document.getElementById('languageToggle');
+            button.innerHTML = `${lang.buttonText} <img src="${lang.flagUrl}" class="flag-icon" alt="${lang.buttonText}">`;
         }
     </script>
 </body>
