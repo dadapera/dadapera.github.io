@@ -11,6 +11,21 @@ Renovate the portfolio into an interactive virtual version of the CV rather than
 - Use high-quality visual animation as a central feature, especially for workflow-heavy experiences.
 - Keep the experience grounded in the CV, but make it feel more like navigating real work than reading bullet points.
 
+## Chosen Layout Direction
+
+Use the PDF resume as the information architecture, not as a literal visual template. The website should be CV-inspired and recruiter-friendly at first glance, then expand into technical project depth for people who want to inspect workflows and implementation details.
+
+The first implemented layout is a single-page interactive CV:
+
+- Hero / identity section with role positioning and primary actions.
+- Sticky CV navigator for `Experience`, `Projects`, `Skills`, `Education`, and `Contact`.
+- Experience timeline where each role becomes a project chapter.
+- Project/workflow panels inside each experience, with the financial documents workflow treated as the first flagship animation candidate.
+- Skills layer grouped like the resume: Programming, AI & ML, LLM & Agents, Infrastructure & Data.
+- Compact education, languages, mindset, and contact sections.
+
+The current visual panels are placeholders. They reserve space and establish hierarchy before detailed animations are designed.
+
 ## Interaction Ideas
 
 - Each CV experience can become its own visual section or project card.
@@ -35,12 +50,11 @@ The goal is for the animation to show both the data flow and the technology stac
 
 ## Open Questions
 
-- What are the exact experiences/projects that should appear in the portfolio?
 - Which experiences deserve full workflow animations versus simpler visual treatments?
 - What stack should the renovated portfolio use?
-- Should the portfolio behave more like a single-page storytelling experience, a dashboard, or a spatial/interactive CV?
 - How detailed should each project section be compared with the PDF resume?
+- What details should be added for each experience before designing its final animation?
 
 ## Next Step
 
-Design the first portfolio layout: page structure, navigation model, section order, and how each CV experience will be represented before building the detailed animations.
+Gather more details for the first flagship animation, starting with the financial documents workflow: exact steps, stack components, agent tools, UI states, and what should move or transform on screen.
